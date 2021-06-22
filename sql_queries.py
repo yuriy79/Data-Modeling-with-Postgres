@@ -14,7 +14,7 @@ song_id text, artist_id text, session_id bigint, location text, user_agen text);
 user_table_create = ("""CREATE TABLE IF NOT EXISTS users (user_id text, first_name text, last_name text, gender varchar, level text);
 """)
 
-song_table_create = ("""CREATE TABLE IF NOT EXISTS songs (song_id text, title text, artist_id text, year int, duration float(5));
+song_table_create = ("""CREATE TABLE IF NOT EXISTS songs (song_id text, title text, artist_id text, year int, duration float);
 """)
 
 artist_table_create = ("""CREATE TABLE IF NOT EXISTS artists (artist_id text, name text, location text, latitude float4, longitude float4);
