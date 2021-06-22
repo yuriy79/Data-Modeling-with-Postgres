@@ -47,7 +47,7 @@ def process_log_file(cur, filepath):
     for index, row in df.iterrows():
         
         # get songid and artistid from song and artist tables
-        cur.execute(song_select, (row.song, row.artist)) #, row.length
+        cur.execute(song_select, (row.song, row.artist, row.length)) #
         results = cur.fetchone()
         
         if results:
@@ -56,7 +56,7 @@ def process_log_file(cur, filepath):
             songid, artistid = None, None
 
         # insert songplay record
-        songplay_data = list((row.song, row.ts, row.userId, row.level, songid, artistid, row.sessionId, 
+        songplay_data = list((index, pd.Timestamp(row.ts, unit='ms'), row.userId, row.level, songid, artistid, row.sessionId, 
                               row.location, row.userAgent))
         cur.execute(songplay_table_insert, songplay_data)
 
@@ -87,6 +87,12 @@ def main():
     process_data(cur, conn, filepath='data/song_data', func=process_song_file)
     process_data(cur, conn, filepath='data/log_data', func=process_log_file)
 
+    #conn.close()
+    
+    cur.execute("select * from songplays WHERE song_id is not null and artist_id is not null")
+    results = cur.fetchall()
+    print("Result of `select * from songplays WHERE song_id is not null and artist_id is not null`:")
+    print(results)
     conn.close()
 
 

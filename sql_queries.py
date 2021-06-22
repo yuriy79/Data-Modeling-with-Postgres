@@ -7,7 +7,7 @@ time_table_drop = "DROP table IF EXISTS time;"
 
 # CREATE TABLES
 
-songplay_table_create = ("""CREATE TABLE IF NOT EXISTS songplays (songplay_id text, start_time bigint, user_id text, level text, 
+songplay_table_create = ("""CREATE TABLE IF NOT EXISTS songplays (songplay_id int, start_time TIMESTAMP, user_id text, level text, 
 song_id text, artist_id text, session_id bigint, location text, user_agen text);
 """)
 
@@ -43,9 +43,8 @@ time_table_insert = ("""INSERT INTO time ( start_time, hour, day, week, month, y
 
 # FIND SONGS
 
-song_select = ("""SELECT songs.song_id, artists.artist_id FROM ((songs \
-JOIN artists ON songs.artist_id=artists.artist_id))\
-WHERE songs.title=%s AND artists.name=%s;
+song_select = ("""SELECT songs.song_id, artists.artist_id FROM ((songs JOIN artists ON songs.artist_id=artists.artist_id))\
+                  WHERE songs.title=%s AND artists.name=%s AND songs.duration=%s;
 """)
 #AND songs.title=%s AND artists.name=%s AND songs.duration=%s
 
