@@ -47,7 +47,7 @@ def process_log_file(cur, filepath):
     for index, row in df.iterrows():
         
         # get songid and artistid from song and artist tables
-        cur.execute(song_select, (row.song, row.artist, row.length)) #
+        cur.execute(song_select, (row.song, row.artist, row.length))
         results = cur.fetchone()
         
         if results:
@@ -56,7 +56,7 @@ def process_log_file(cur, filepath):
             songid, artistid = None, None
 
         # insert songplay record
-        songplay_data = list((index, pd.Timestamp(row.ts, unit='ms'), row.userId, row.level, songid, artistid, row.sessionId, 
+        songplay_data = list((pd.Timestamp(row.ts, unit='ms'), row.userId, row.level, songid, artistid, row.sessionId, 
                               row.location, row.userAgent))
         cur.execute(songplay_table_insert, songplay_data)
 
