@@ -6,6 +6,12 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
+    """Process data from song json-file and insert it to db tables.
+
+    Keyword arguments:
+    cur -- cursor for execution sql-query
+    filepath -- path to data file
+    """
     # open song file
     df = pd.read_json(filepath, lines=True)
 
@@ -19,6 +25,12 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
+    """Process data from log json-file and insert it to db tables.
+
+    Keyword arguments:
+    cur -- cursor for execution sql-query
+    filepath -- path to data file
+    """
     # open log file
     df = pd.read_json(filepath, lines=True)
 
@@ -29,7 +41,7 @@ def process_log_file(cur, filepath):
     t = df['ts'].apply(lambda x: pd.Timestamp(x, unit='ms'))
     
     # insert time data records
-    time_data = (df.ts, t.dt.hour, t.dt.day, t.dt.week, t.dt.month, t.dt.year, t.dt.weekday)
+    time_data = ( t.values, t.dt.hour, t.dt.day, t.dt.week, t.dt.month, t.dt.year, t.dt.weekday)
     column_labels = ('timestamp', 'hour', 'day', 'week', 'month', 'year', 'weekday')
     time_df = pd.DataFrame({c:t for c, t in zip(column_labels,time_data)})
 
@@ -62,6 +74,13 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
+    """Process data from json-files and insert it to db tables.
+
+    Keyword arguments:
+    cur -- cursor for execution sql-query
+    filepath -- path to json-files
+    func -- function for process data for each json-file
+    """
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
@@ -81,6 +100,7 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
+    
     conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
 
