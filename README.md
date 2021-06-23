@@ -9,11 +9,11 @@ This includes the following tables.</p>
 <p>users - users in the app<br>
  *user_id, first_name, last_name, gender, level.</p>
  
-<p>songs - songs in music database<bk>
+<p>songs - songs in music database<br>
  *song_id, title, artist_id, year, duration.</p>
  
-<p>artists - artists in music database<bk>
+<p>artists - artists in music database<br>
  *artist_id, name, location, latitude, longitude.</p>
  
-<p>time - timestamps of records in songplays broken down into specific units<bk>
+<p>time - timestamps of records in songplays broken down into specific units<br>
  *start_time, hour, day, week, month, year, weekday</p>
