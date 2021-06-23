@@ -7,8 +7,19 @@ time_table_drop = "DROP table IF EXISTS time;"
 
 # CREATE TABLES
 
-songplay_table_create = ("""CREATE TABLE IF NOT EXISTS songplays (songplay_id serial PRIMARY KEY, start_time TIMESTAMP, user_id text, level text, 
-song_id text, artist_id text, session_id bigint, location text, user_agen text);
+songplay_table_create = ("""CREATE TABLE IF NOT EXISTS songplays (songplay_id serial PRIMARY KEY, start_time TIMESTAMP NOT NULL, 
+                            user_id int, level text, song_id text, artist_id text, session_id bigint, location text, user_agen text,
+
+                            CONSTRAINT fk_users FOREIGN KEY (user_id) REFERENCES users (user_id),
+
+                            CONSTRAINT fk_songs FOREIGN KEY (song_id) REFERENCES songs (song_id),
+
+                            CONSTRAINT fk_artists FOREIGN KEY (artist_id) REFERENCES artists (artist_id),
+
+                            CONSTRAINT fk_time FOREIGN KEY (start_time) REFERENCES time (start_time)
+
+);
+
 """)
 
 user_table_create = ("""CREATE TABLE IF NOT EXISTS users (user_id text, first_name text, last_name text, gender varchar, level text);
